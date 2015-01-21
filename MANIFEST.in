@@ -1,6 +1,3 @@
 include LICENSE
 include README.rst
-include versions.cfg
-include buildout.cfg
-include bootstrap.py
 recursive-include mots_vides
