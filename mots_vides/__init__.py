@@ -1,9 +1,7 @@
 """
 Mots-vides
 """
-__version__ = '2015.1.21.dev0'
+from mots_vides import StopWord
+from mots_vides import StopWordFactory
 
-__author__ = 'Fantomas42'
-__email__ = 'fantomas42@gmail.com'
-
-__url__ = 'https://github.com/Fantomas42/mots-vides'
+__all__ = ['StopWord', 'StopWordFactory']

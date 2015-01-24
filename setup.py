@@ -2,19 +2,17 @@
 from setuptools import setup
 from setuptools import find_packages
 
-import mots_vides
-
 setup(
     name='mots-vides',
-    version=mots_vides.__version__,
+    version='2015.1.21.dev0',
 
     description='Python library for managing stop words in many languages.',
     long_description=open('README.rst').read(),
     keywords='stop, words, text, parsing',
 
-    author=mots_vides.__author__,
-    author_email=mots_vides.__email__,
-    url=mots_vides.__url__,
+    author='Fantomas42',
+    author_email='fantomas42@gmail.com',
+    url='https://github.com/Fantomas42/mots-vides',
 
     license=open('LICENSE').read(),
 
