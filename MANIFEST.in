@@ -1,3 +1,3 @@
 include LICENSE
 include README.rst
-recursive-include mots_vides
+recursive-include mots_vides *
