@@ -1,0 +1,8 @@
+[run]
+source		= mots_vides
+omit		= mots_vides/tests/*
+
+[report]
+exclude_lines	=
+    pragma: no cover
+show_missing    = True
