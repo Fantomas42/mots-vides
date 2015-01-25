@@ -24,8 +24,8 @@ def cmdline(argv=sys.argv[1:]):
     language = options.language
     stop_words = factory.get_stop_words(language, fail_safe=True)
 
-    for source_filename in options.sources:
-        stop_words += StopWord(language, factory.read_collection(source_filename))
+    for filename in options.sources:
+        stop_words += StopWord(language, factory.read_collection(filename))
 
     filename = factory.get_collection_filename(language)
     factory.write_collection(filename, stop_words.collection)
