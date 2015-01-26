@@ -7,8 +7,8 @@ from unittest import TestCase
 from unittest import TestSuite
 from unittest import TestLoader
 
-import stop_words
-import constants
+from mots_vides import stop_words
+from mots_vides import constants
 
 constants.DATA_DIRECTORY = os.path.join(
     os.path.dirname(
