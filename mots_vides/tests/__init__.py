@@ -7,8 +7,8 @@ from unittest import TestCase
 from unittest import TestSuite
 from unittest import TestLoader
 
-import stopwords
-import constants
+from mots_vides import stop_words
+from mots_vides import constants
 
 constants.DATA_DIRECTORY = os.path.join(
     os.path.dirname(
@@ -16,23 +16,26 @@ constants.DATA_DIRECTORY = os.path.join(
     'testdata/'
 )
 
+
 class StopWordFactoryTestCase(TestCase):
 
-    factory = stopwords.StopWordFactory()
+    factory = stop_words.StopWordFactory()
     language = 'foo'
-    expection_file_collection = set(['bla', 'foo', 'bar', 'woot', 'doublewoot'])
+    expection_file_collection = set(['bla', 'foo', 'bar',
+                                     'woot', 'doublewoot'])
     expected_filename = 'foo.txt'
 
     def _flush_cash(self):
-        stopwords.LOADED_LANGUAGES.clear()
+        stop_words.LOADED_LANGUAGES.clear()
 
     def test_get_stopwords(self):
         sw = self.factory.get_stop_words(self.language, fail_safe=False)
-        self.assertTrue(isinstance(sw, stopwords.StopWord))
+        self.assertTrue(isinstance(sw, stop_words.StopWord))
         self.assertEqual(sw.collection, self.expection_file_collection)
         self._flush_cash()
         sw = self.factory.get_stop_words('blabla', fail_safe=True)
         self.assertEqual(len(sw), 0)
+        factory = stop_words.StopWordFactory()
         with self.assertRaises(Exception):
             sw = factory.get_stop_words('blabla', fail_safe=False)
 
@@ -44,27 +47,25 @@ class StopWordFactoryTestCase(TestCase):
         self.assertEqual(filename, self.expected_filename)
 
 
-
-
 class StopWordTestCase(TestCase):
 
     collection_test1 = set(["foo", "bar", "bla"])
     collection_test2 = set(["oof", "rab", "alb"])
 
     def test_len_method(self):
-        sw1 = stopwords.StopWord('foo', self.collection_test1)
+        sw1 = stop_words.StopWord('foo', self.collection_test1)
         print "1"
 
         self.assertEqual(len(sw1), len(sw1.collection))
 
     def test_contain_method(self):
-        sw1 = stopwords.StopWord('foo', self.collection_test1)
+        sw1 = stop_words.StopWord('foo', self.collection_test1)
         print "2"
         for elem in self.collection_test1:
             self.assertTrue(elem in sw1)
 
     def test_iter_method(self):
-        sw1 = stopwords.StopWord('foo', self.collection_test1)
+        sw1 = stop_words.StopWord('foo', self.collection_test1)
         expected_item_count = 3
         count = 0
         for elem in sw1:
@@ -73,8 +74,8 @@ class StopWordTestCase(TestCase):
         self.assertEqual(expected_item_count, count)
 
     def test_add_n_sub_method(self):
-        sw1 = stopwords.StopWord('foo', self.collection_test1)
-        sw2 = stopwords.StopWord('bar', self.collection_test2)
+        sw1 = stop_words.StopWord('foo', self.collection_test1)
+        sw2 = stop_words.StopWord('bar', self.collection_test2)
         print "4"
         sw1 + sw2
 
@@ -92,5 +93,6 @@ loader = TestLoader()
 test_suite = TestSuite(
     [
         loader.loadTestsFromTestCase(StopWordTestCase),
+        loader.loadTestsFromTestCase(StopWordFactoryTestCase),
     ]
 )

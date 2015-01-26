@@ -1,6 +1,7 @@
 [run]
 source		= mots_vides
 omit		= mots_vides/tests/*
+                  mots_vides/scripts/*
 
 [report]
 exclude_lines	=
