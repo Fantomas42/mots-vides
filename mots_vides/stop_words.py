@@ -6,6 +6,7 @@ DATA_DIRECTORY = DATA_DIRECTORY
 
 LOADED_LANGUAGES = {}
 
+
 class StopWordFactory(object):
 
     def __init__(self, path=DATA_DIRECTORY, fail_safe=False):
@@ -20,11 +21,11 @@ class StopWordFactory(object):
                     'r',
                     encoding='utf8-sig'
                 )
-                collection = set(f.read().splitlines())
+                collection = set(language_file.read().splitlines())
             except:
                 if not self.fail_safe:
                     raise Exception("No file here!!!!!!!")
-                collection =  set()
+                collection = set()
 
             stop_words = StopWord(
                 language,
@@ -44,9 +45,9 @@ class StopWordFactory(object):
 
     def write_collection(self, filename, collection):
         language_file = codecs.open(
-                '{0}{1}'.format(DATA_DIRECTORY, filename),
-                'w+',
-                encoding='utf8'
+            '{0}{1}'.format(DATA_DIRECTORY, filename),
+            'w+',
+            encoding='utf8'
             )
         for item in collection:
             language_file.write("{0}\n".format(item.encode('utf-8')))
@@ -56,7 +57,7 @@ class StopWord(object):
 
     def __init__(self, language, collection=None):
         self.language = language
-    	self.collection = collection
+        self.collection = collection
 
     def __add__(self, entry):
         if isinstance(entry, str):

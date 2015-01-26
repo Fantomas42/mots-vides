@@ -16,11 +16,13 @@ constants.DATA_DIRECTORY = os.path.join(
     'testdata/'
 )
 
+
 class StopWordFactoryTestCase(TestCase):
 
     factory = stop_words.StopWordFactory()
     language = 'foo'
-    expection_file_collection = set(['bla', 'foo', 'bar', 'woot', 'doublewoot'])
+    expection_file_collection = set(['bla', 'foo', 'bar',
+                                     'woot', 'doublewoot'])
     expected_filename = 'foo.txt'
 
     def _flush_cash(self):
@@ -33,6 +35,7 @@ class StopWordFactoryTestCase(TestCase):
         self._flush_cash()
         sw = self.factory.get_stop_words('blabla', fail_safe=True)
         self.assertEqual(len(sw), 0)
+        factory = stop_words.StopWordFactory()
         with self.assertRaises(Exception):
             sw = factory.get_stop_words('blabla', fail_safe=False)
 
@@ -42,8 +45,6 @@ class StopWordFactoryTestCase(TestCase):
 
         filename = self.factory.get_collection_filename('jkhj')
         self.assertEqual(filename, self.expected_filename)
-
-
 
 
 class StopWordTestCase(TestCase):
@@ -92,5 +93,6 @@ loader = TestLoader()
 test_suite = TestSuite(
     [
         loader.loadTestsFromTestCase(StopWordTestCase),
+        loader.loadTestsFromTestCase(StopWordFactoryTestCase),
     ]
 )
