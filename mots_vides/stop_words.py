@@ -9,11 +9,10 @@ LOADED_LANGUAGES = {}
 
 class StopWordFactory(object):
 
-    def __init__(self, path=DATA_DIRECTORY, fail_safe=False):
+    def __init__(self, path=DATA_DIRECTORY):
         self.path = path
-        self.fail_safe = fail_safe
 
-    def get_stop_words(self, language):
+    def get_stop_words(self, language, fail_safe=False):
         if not LOADED_LANGUAGES[language]:
             try:
                 language_file = codecs.open(
@@ -23,7 +22,7 @@ class StopWordFactory(object):
                 )
                 collection = set(language_file.read().splitlines())
             except:
-                if not self.fail_safe:
+                if not fail_safe:
                     raise Exception("No file here!!!!!!!")
                 collection = set()
 
