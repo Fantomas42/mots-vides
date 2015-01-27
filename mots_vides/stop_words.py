@@ -1,14 +1,13 @@
 """
-StopWord Python container,
-managing collection of stop words.
+StopWord Python container, managing collection of stop words.
 """
 
 
 class StopWord(object):
 
-    def __init__(self, language, collection=None):
+    def __init__(self, language, collection=[]):
         self.language = language
-        self.collection = collection
+        self.collection = set(collection)
 
     def __add__(self, entry):
         if isinstance(entry, str):
