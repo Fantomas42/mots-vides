@@ -29,28 +29,22 @@ class StopWordFactory(object):
         If the requested language is not available a StopWordError is raised.
         If ``fail_safe`` is set to True, an empty StopWord object is returned.
         """
-        if not self.LOADED_LANGUAGES_CACHE.get(language, False):
+        collection = self.LOADED_LANGUAGES_CACHE.get(language)
+
+        if not collection:
             try:
-                language_file = codecs.open(
-                    '{0}{1}.txt'.format(self.path, language),
-                    'r',
-                    encoding='utf-8-sig'
-                )
-                collection = set(language_file.read().splitlines())
-            except:
+                filename = self.get_collection_filename(language)
+                collection = self.read_collection(filename)
+            except IOError:
                 if not fail_safe:
-                    raise StopWordError("No file here!!!!!!!")
-                collection = set()
+                    raise StopWordError(
+                        '"%s" file is unreadable, check your installation.' %
+                        filename)
+                collection = []
 
-            stop_words = StopWord(
-                language,
-                collection
-            )
-
-            self.LOADED_LANGUAGES_CACHE[language] = stop_words
-            return stop_words
-
-        return self.LOADED_LANGUAGES_CACHE[language]
+        self.LOADED_LANGUAGES_CACHE[language] = collection
+        stop_words = StopWord(language, collection)
+        return stop_words
 
     @property
     def get_available_languages(self):
