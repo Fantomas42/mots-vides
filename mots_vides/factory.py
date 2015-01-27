@@ -3,19 +3,33 @@ Factory for getting initialized StopWord collections.
 """
 import os
 import codecs
-from constants import DATA_DIRECTORY
-from stop_words import StopWord
 
-LOADED_LANGUAGES = {}
+from mots_vides.stop_words import StopWord
+from mots_vides.constants import DATA_DIRECTORY
+from mots_vides.exceptions import StopWordError
 
 
 class StopWordFactory(object):
+    """
+    Factory managing the collections of stop words by languages.
+    """
 
-    def __init__(self, path=DATA_DIRECTORY):
-        self.path = path
+    def __init__(self, data_directory=DATA_DIRECTORY):
+        """
+        Initializes the factory with the directory path where to find
+        the collections of stop words.
+        """
+        self.data_directory = data_directory
+        self.LOADED_LANGUAGES_CACHE = {}
 
     def get_stop_words(self, language, fail_safe=False):
-        if not LOADED_LANGUAGES.get(language, False):
+        """
+        Returns a StopWord object initialized with the stop words collection
+        requested by ``language``.
+        If the requested language is not available a StopWordError is raised.
+        If ``fail_safe`` is set to True, an empty StopWord object is returned.
+        """
+        if not self.LOADED_LANGUAGES_CACHE.get(language, False):
             try:
                 language_file = codecs.open(
                     '{0}{1}.txt'.format(self.path, language),
@@ -25,7 +39,7 @@ class StopWordFactory(object):
                 collection = set(language_file.read().splitlines())
             except:
                 if not fail_safe:
-                    raise Exception("No file here!!!!!!!")
+                    raise StopWordError("No file here!!!!!!!")
                 collection = set()
 
             stop_words = StopWord(
@@ -33,21 +47,31 @@ class StopWordFactory(object):
                 collection
             )
 
-            LOADED_LANGUAGES[language] = stop_words
+            self.LOADED_LANGUAGES_CACHE[language] = stop_words
             return stop_words
 
-        return LOADED_LANGUAGES[language]
+        return self.LOADED_LANGUAGES_CACHE[language]
 
     def get_collection_filename(self, language):
+        """
+        Returns the filename containing the stop words collection
+        for a specific language.
+        """
         if os.path.exists('{0}{1}.txt'.format(self.path, language)):
             return '{0}.txt'.format(language)
         else:
-            raise Exception("No file here!!!!!!!")
+            raise StopWordError("No file here!!!!!!!")
 
-    def get_available_language(cls):
+    def get_available_language(self):
+        """
+        Returns a list of languages providing collection of stop words.
+        """
         return os.listdir(self.path)
 
     def write_collection(self, filename, collection):
+        """
+        Write a collection of stop words into a file.
+        """
         language_file = codecs.open(
             '{0}{1}'.format(self.path, filename),
             'w+',
