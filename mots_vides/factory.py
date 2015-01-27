@@ -33,18 +33,29 @@ class StopWordFactory(object):
 
         if not collection:
             try:
-                filename = self.get_collection_filename(language)
-                collection = self.read_collection(filename)
-            except IOError:
+                collection = self._get_stop_words(language)
+            except StopWordError as error:
                 if not fail_safe:
-                    raise StopWordError(
-                        '"%s" file is unreadable, check your installation.' %
-                        filename)
+                    raise error
                 collection = []
 
         self.LOADED_LANGUAGES_CACHE[language] = collection
         stop_words = StopWord(language, collection)
         return stop_words
+
+    def _get_stop_words(self, language):
+        """
+        Internal method for getting the stop words collections
+        and raising errors.
+        """
+        try:
+            filename = self.get_collection_filename(language)
+            collection = self.read_collection(filename)
+        except IOError:
+            raise StopWordError(
+                '"%s" file is unreadable, check your installation.' %
+                filename)
+        return collection
 
     @property
     def get_available_languages(self):
