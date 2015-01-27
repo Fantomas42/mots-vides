@@ -5,6 +5,7 @@ import os
 
 from mots_vides.stop_words import StopWord
 from mots_vides.constants import DATA_DIRECTORY
+from mots_vides.constants import LANGUAGE_CODES
 from mots_vides.exceptions import StopWordError
 
 
@@ -28,6 +29,11 @@ class StopWordFactory(object):
         If the requested language is not available a StopWordError is raised.
         If ``fail_safe`` is set to True, an empty StopWord object is returned.
         """
+        try:
+            language = LANGUAGE_CODES[language]
+        except KeyError:
+            pass
+
         collection = self.LOADED_LANGUAGES_CACHE.get(language)
 
         if collection is None:
