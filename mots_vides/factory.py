@@ -60,11 +60,13 @@ class StopWordFactory(object):
         filename = os.path.join(self.data_directory, '%s.txt' % language)
         return filename
 
-    def get_available_language(self):
+    def get_available_languages(self):
         """
         Returns a list of languages providing collection of stop words.
         """
-        return os.listdir(self.path)
+        languages = os.listdir(self.data_directory)
+        languages = sorted(map(lambda x: x.replace('.txt', ''), languages))
+        return languages
 
     def write_collection(self, filename, collection):
         """
