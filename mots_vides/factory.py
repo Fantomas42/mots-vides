@@ -57,10 +57,8 @@ class StopWordFactory(object):
         Returns the filename containing the stop words collection
         for a specific language.
         """
-        if os.path.exists('{0}{1}.txt'.format(self.path, language)):
-            return '{0}.txt'.format(language)
-        else:
-            raise StopWordError("No file here!!!!!!!")
+        filename = os.path.join(self.data_directory, '%s.txt' % language)
+        return filename
 
     def get_available_language(self):
         """
