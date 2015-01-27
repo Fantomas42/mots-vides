@@ -77,10 +77,7 @@ class StopWordFactory(object):
         """
         Write a collection of stop words into a file.
         """
-        language_file = codecs.open(
-            '{0}{1}'.format(self.path, filename),
-            'w+',
-            encoding='utf8'
-            )
-        for item in collection:
-            language_file.write("{0}\n".format(item.encode('utf-8')))
+        collection = sorted(list(collection))
+        with open(filename, 'w+') as fd:
+            fd.truncate()
+            fd.write('\n'.join(collection).encode('utf-8'))
