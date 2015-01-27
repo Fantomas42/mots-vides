@@ -2,7 +2,6 @@
 Factory for getting initialized StopWord collections.
 """
 import os
-import codecs
 
 from mots_vides.stop_words import StopWord
 from mots_vides.constants import DATA_DIRECTORY
@@ -48,6 +47,12 @@ class StopWordFactory(object):
         Internal method for getting the stop words collections
         and raising errors.
         """
+        if language not in self.available_languages:
+            raise StopWordError(
+                'Stop words are not unavailable in "%s".\n'
+                'If possible do a pull request at : '
+                'https://github.com/Fantomas42/mots-vides' %
+                language)
         try:
             filename = self.get_collection_filename(language)
             collection = self.read_collection(filename)
@@ -58,7 +63,7 @@ class StopWordFactory(object):
         return collection
 
     @property
-    def get_available_languages(self):
+    def available_languages(self):
         """
         Returns a list of languages providing collection of stop words.
         """
