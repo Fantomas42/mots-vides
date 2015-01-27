@@ -13,12 +13,12 @@ class StopWordFactory(object):
         self.path = path
 
     def get_stop_words(self, language, fail_safe=False):
-        if not LOADED_LANGUAGES[language]:
+        if not LOADED_LANGUAGES.get(language, False):
             try:
                 language_file = codecs.open(
-                    '{0}{1}.txt'.format(DATA_DIRECTORY, language),
+                    '{0}{1}.txt'.format(self.path, language),
                     'r',
-                    encoding='utf8-sig'
+                    encoding='utf-8-sig'
                 )
                 collection = set(language_file.read().splitlines())
             except:
@@ -37,14 +37,17 @@ class StopWordFactory(object):
         return LOADED_LANGUAGES[language]
 
     def get_collection_filename(self, language):
-        return '{0}{1}.txt'.format(DATA_DIRECTORY, language)
+        if os.path.exists('{0}{1}.txt'.format(self.path, language)):
+            return '{0}.txt'.format(language)
+        else:
+            raise Exception("No file here!!!!!!!")
 
     def get_available_language(cls):
-        return os.listdir(DATA_DIRECTORY)
+        return os.listdir(self.path)
 
     def write_collection(self, filename, collection):
         language_file = codecs.open(
-            '{0}{1}'.format(DATA_DIRECTORY, filename),
+            '{0}{1}'.format(self.path, filename),
             'w+',
             encoding='utf8'
             )
