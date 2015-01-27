@@ -52,14 +52,6 @@ class StopWordFactory(object):
 
         return self.LOADED_LANGUAGES_CACHE[language]
 
-    def get_collection_filename(self, language):
-        """
-        Returns the filename containing the stop words collection
-        for a specific language.
-        """
-        filename = os.path.join(self.data_directory, '%s.txt' % language)
-        return filename
-
     @property
     def get_available_languages(self):
         """
@@ -72,6 +64,14 @@ class StopWordFactory(object):
         languages = sorted(map(lambda x: x.replace('.txt', ''), languages))
         setattr(self, 'available_languages', languages)
         return languages
+
+    def get_collection_filename(self, language):
+        """
+        Returns the filename containing the stop words collection
+        for a specific language.
+        """
+        filename = os.path.join(self.data_directory, '%s.txt' % language)
+        return filename
 
     def write_collection(self, filename, collection):
         """
