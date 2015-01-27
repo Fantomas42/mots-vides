@@ -65,6 +65,10 @@ class StopWordFactory(object):
         setattr(self, 'available_languages', languages)
         return languages
 
+    """
+    Here the tools for the (de)serialization of the collection files.
+    """
+
     def get_collection_filename(self, language):
         """
         Returns the filename containing the stop words collection
@@ -73,9 +77,18 @@ class StopWordFactory(object):
         filename = os.path.join(self.data_directory, '%s.txt' % language)
         return filename
 
+    def read_collection(self, filename):
+        """
+        Reads and returns a collection of stop words into a file.
+        """
+        with open(filename, 'rb') as fd:
+            lines = fd.read().decode('utf-8-sig').splitlines()
+        collection = filter(bool, [line.strip() for line in lines])
+        return collection
+
     def write_collection(self, filename, collection):
         """
-        Write a collection of stop words into a file.
+        Writes a collection of stop words into a file.
         """
         collection = sorted(list(collection))
         with open(filename, 'w+') as fd:
