@@ -4,15 +4,16 @@ Tests for StopWordFactory
 import os
 from unittest import TestCase
 
+from mots_vides.stop_words import StopWord
 from mots_vides.factory import StopWordFactory
+from mots_vides.factory import LOADED_LANGUAGES
 
 
 class StopWordFactoryTestCase(TestCase):
 
     factory = StopWordFactory(path=os.path.join(
         os.path.dirname(
-            os.path.abspath(__file__)),
-            'datas/'
+            os.path.abspath(__file__)), 'datas/'
         )
     )
     language = 'foo'
@@ -21,11 +22,11 @@ class StopWordFactoryTestCase(TestCase):
     expected_filename = 'foo.txt'
 
     def _flush_cash(self):
-        stop_words.LOADED_LANGUAGES.clear()
+        LOADED_LANGUAGES.clear()
 
     def test_get_stopwords(self):
         sw = self.factory.get_stop_words(self.language)
-        self.assertTrue(isinstance(sw, stop_words.StopWord))
+        self.assertTrue(isinstance(sw, StopWord))
         self.assertEqual(sw.collection, self.expection_file_collection)
         self._flush_cash()
 
