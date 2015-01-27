@@ -31,15 +31,15 @@ class StopWordFactory(object):
         """
         collection = self.LOADED_LANGUAGES_CACHE.get(language)
 
-        if not collection:
+        if collection is None:
             try:
                 collection = self._get_stop_words(language)
             except StopWordError as error:
                 if not fail_safe:
                     raise error
                 collection = []
+            self.LOADED_LANGUAGES_CACHE[language] = collection
 
-        self.LOADED_LANGUAGES_CACHE[language] = collection
         stop_words = StopWord(language, collection)
         return stop_words
 
