@@ -4,9 +4,9 @@ Factory for getting initialized StopWord collections.
 import os
 
 from mots_vides.stop_words import StopWord
+from mots_vides.exceptions import StopWordError
 from mots_vides.constants import DATA_DIRECTORY
 from mots_vides.constants import LANGUAGE_CODES
-from mots_vides.exceptions import StopWordError
 
 
 class StopWordFactory(object):
@@ -14,12 +14,14 @@ class StopWordFactory(object):
     Factory managing the collections of stop words by languages.
     """
 
-    def __init__(self, data_directory=DATA_DIRECTORY):
+    def __init__(self, data_directory=DATA_DIRECTORY,
+                 language_codes=LANGUAGE_CODES):
         """
         Initializes the factory with the directory path where to find
         the collections of stop words.
         """
         self.data_directory = data_directory
+        self.language_codes = language_codes
         self.LOADED_LANGUAGES_CACHE = {}
 
     def get_stop_words(self, language, fail_safe=False):
@@ -30,7 +32,7 @@ class StopWordFactory(object):
         If ``fail_safe`` is set to True, an empty StopWord object is returned.
         """
         try:
-            language = LANGUAGE_CODES[language]
+            language = self.language_codes[language]
         except KeyError:
             pass
 
