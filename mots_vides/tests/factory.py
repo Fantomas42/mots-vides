@@ -24,7 +24,29 @@ class StopWordFactoryTestCase(TestCase):
         self.assertEqual(list(sw.collection),
                          ['nuq', "HIja'", "ghobe'", 'naDev'])
 
+    def test_get_stopwords_cache(self):
+        pass
+
+    def test_get_stopwords_shortcuts(self):
+        pass
+
+    def test_get_stopwords_fail_safe(self):
+        pass
+
+    def test_available_languages(self):
+        self.assertEqual(self.factory.available_languages,
+                         ['klingon', 'sindarin'])
+        self.factory.data_directory = '/brutal/change/'
+        self.assertEqual(self.factory.available_languages,
+                         ['klingon', 'sindarin'])
+
     def test_get_collection_filename(self):
         filename = self.factory.get_collection_filename('foo')
         self.assertTrue(filename.endswith('foo.txt'))
         self.assertTrue(filename.startswith(self.data_directory))
+
+    def test_read_collection(self):
+        pass
+
+    def test_write_collection(self):
+        pass
