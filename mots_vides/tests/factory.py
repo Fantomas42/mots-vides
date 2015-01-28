@@ -2,6 +2,7 @@
 Tests for StopWordFactory
 """
 import os
+from tempfile import NamedTemporaryFile
 
 from unittest import TestCase
 
@@ -46,7 +47,21 @@ class StopWordFactoryTestCase(TestCase):
         self.assertTrue(filename.startswith(self.data_directory))
 
     def test_read_collection(self):
-        pass
+        collection_file = NamedTemporaryFile()
+        collection_text = 'egor\n\n   \nai\n'
+        collection_file.write('\xef\xbb\xbf')  # BOM
+        collection_file.write(collection_text.encode('utf-8'))
+        collection_file.seek(0)
+        collection = self.factory.read_collection(collection_file.name)
+        self.assertEqual(collection, ['egor', 'ai'])
+        collection_file.close()
 
     def test_write_collection(self):
-        pass
+        collection_file = NamedTemporaryFile()
+        self.factory.write_collection(
+            collection_file.name,
+            ['nuq', "HIja'", "ghobe'", 'naDev'])
+        collection_file.seek(0)
+        self.assertEqual(collection_file.read(),
+                         "HIja'\nghobe'\nnaDev\nnuq")
+        collection_file.close()
