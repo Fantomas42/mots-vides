@@ -58,6 +58,14 @@ class StopWordFactoryTestCase(TestCase):
         self.assertEqual(sw.collection,
                          self.factory.get_stop_words('klingon').collection)
 
+    def test_get_stopwords_cache_and_errors(self):
+        self.assertRaises(StopWordError, self.factory.get_stop_words, 'vulcan')
+        self.assertRaises(StopWordError, self.factory.get_stop_words, 'vulcan')
+        self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE, {})
+        self.factory.get_stop_words('vulcan', fail_safe=True)
+        self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE, {})
+        self.assertRaises(StopWordError, self.factory.get_stop_words, 'vulcan')
+
     def test_available_languages(self):
         self.assertEqual(self.factory.available_languages,
                          ['klingon', 'sindarin'])
