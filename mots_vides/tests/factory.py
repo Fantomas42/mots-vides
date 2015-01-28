@@ -35,9 +35,15 @@ class StopWordFactoryTestCase(TestCase):
 
     def test_get_stopwords_unavailable_language(self):
         self.assertRaises(StopWordError, self.factory.get_stop_words, 'vulcan')
-
-    def test_get_stopwords_fail_safe(self):
         sw = self.factory.get_stop_words('vulcan', fail_safe=True)
+        self.assertEqual(list(sw.collection), [])
+
+    def test_get_stopwords_file_unreadable(self):
+        self.factory.available_languages  # Fill the cache, pass security
+        self.factory.data_directory = '/brutal/change/'
+        self.assertRaises(StopWordError,
+                          self.factory.get_stop_words, 'klingon')
+        sw = self.factory.get_stop_words('klingon', fail_safe=True)
         self.assertEqual(list(sw.collection), [])
 
     def test_get_stopwords_cache(self):
