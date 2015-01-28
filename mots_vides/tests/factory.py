@@ -8,6 +8,7 @@ from unittest import TestCase
 
 from mots_vides.stop_words import StopWord
 from mots_vides.factory import StopWordFactory
+from mots_vides.exceptions import StopWordError
 
 
 class StopWordFactoryTestCase(TestCase):
@@ -17,7 +18,9 @@ class StopWordFactoryTestCase(TestCase):
             os.path.dirname(
                 os.path.abspath(__file__)),
             'datas/')
-        self.factory = StopWordFactory(self.data_directory)
+        self.factory = StopWordFactory(self.data_directory,
+                                       {'kl': 'klingon',
+                                        'si': 'sindarin'})
 
     def test_get_stopwords(self):
         sw = self.factory.get_stop_words('klingon')
@@ -25,14 +28,29 @@ class StopWordFactoryTestCase(TestCase):
         self.assertEqual(list(sw.collection),
                          ['nuq', "HIja'", "ghobe'", 'naDev'])
 
-    def test_get_stopwords_cache(self):
-        pass
-
     def test_get_stopwords_shortcuts(self):
-        pass
+        sw = self.factory.get_stop_words('kl')
+        self.assertEqual(list(sw.collection),
+                         ['nuq', "HIja'", "ghobe'", 'naDev'])
+
+    def test_get_stopwords_unavailable_language(self):
+        self.assertRaises(StopWordError, self.factory.get_stop_words, 'vulcan')
 
     def test_get_stopwords_fail_safe(self):
-        pass
+        sw = self.factory.get_stop_words('vulcan', fail_safe=True)
+        self.assertEqual(list(sw.collection), [])
+
+    def test_get_stopwords_cache(self):
+        self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE, {})
+        self.factory.get_stop_words('klingon')
+        self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE.keys(),
+                         ['klingon'])
+        sw = self.factory.get_stop_words('kl')
+        self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE.keys(),
+                         ['klingon'])
+        self.factory.data_directory = '/brutal/change/'
+        self.assertEqual(sw.collection,
+                         self.factory.get_stop_words('klingon').collection)
 
     def test_available_languages(self):
         self.assertEqual(self.factory.available_languages,
