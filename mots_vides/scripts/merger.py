@@ -5,7 +5,7 @@ import sys
 from argparse import ArgumentParser
 
 from mots_vides.stop_words import StopWord
-from mots_vides.stop_words import StopWordFactory
+from mots_vides.factory import StopWordFactory
 
 
 def cmdline(argv=sys.argv[1:]):
