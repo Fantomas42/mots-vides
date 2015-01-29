@@ -25,13 +25,13 @@ class StopWordFactoryTestCase(TestCase):
     def test_get_stopwords(self):
         sw = self.factory.get_stop_words('klingon')
         self.assertTrue(isinstance(sw, StopWord))
-        self.assertEqual(list(sw.collection),
-                         ['nuq', "HIja'", "ghobe'", 'naDev'])
+        self.assertEqual(sorted(list(sw.collection)),
+                         ["HIja'", "ghobe'", 'naDev', 'nuq'])
 
     def test_get_stopwords_shortcuts(self):
         sw = self.factory.get_stop_words('kl')
-        self.assertEqual(list(sw.collection),
-                         ['nuq', "HIja'", "ghobe'", 'naDev'])
+        self.assertEqual(sorted(list(sw.collection)),
+                         ["HIja'", "ghobe'", 'naDev', 'nuq'])
 
     def test_get_stopwords_unavailable_language(self):
         self.assertRaises(StopWordError, self.factory.get_stop_words, 'vulcan')
