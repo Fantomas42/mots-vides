@@ -37,3 +37,113 @@ class StopWordTestCase(TestCase):
         sw1 - sw2
         for elem in sw2.collection:
             self.assertTrue(elem not in sw1.collection)
+
+    def test_stopword_rebase_first(self):
+        #test with first word in text
+        sw1 = stop_words.StopWord('foo', set(["comme"]))
+        text = "Comme je viens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "je viens de te le dire")
+
+    def test_stopword_rebase_middle(self):
+        #test with word in middle of text
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens"])
+        text = "Comme je viens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme je de te le dire")
+
+    def test_stopword_rebase_newline_between(self):
+        #test with newline between two words
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens", "je"])
+        text = "Comme je\nviens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme\nde te le dire")
+
+    def test_stopword_rebase_newline_after(self):
+        #test with newline after word
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["je"])
+        text = "Comme je\nviens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme\nviens de te le dire")
+
+    def test_stopword_rebase_newline_before(self):
+        #test with newline before word
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens"])
+        text = "Comme je\nviens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme je\nde te le dire")
+
+    def test_stopword_rebase_two_escape_code_before(self):
+        #test with newline before word
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens"])
+        text = "Comme je\n\tviens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme je\n\tde te le dire")
+
+    def test_stopword_rebase_two_escape_code_after(self):
+        #test with newline before word
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens"])
+        text = "Comme je viens\n\tde te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme je\n\tde te le dire")
+
+
+    def test_stopword_rebase_tab_between(self):
+        #test with newline between two words
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens", "je"])
+        text = "Comme je\tviens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme\tde te le dire")
+
+    def test_stopword_rebase_tab_after(self):
+        #test with newline after word
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["je"])
+        text = "Comme je\tviens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme\tviens de te le dire")
+
+    def test_stopword_rebase_tab_before(self):
+        #test with newline before word
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens"])
+        text = "Comme je\tviens de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme je\tde te le dire")
+
+    def test_stopword_dont_rebase(self):
+        #test with newline before word
+        sw1 = stop_words.StopWord('foo')
+        sw1.collection = set(["viens"])
+        text = "Comme je viensbhgfds de te le dire"
+        text = sw1.rebase(text)
+        self.assertEqual(
+            text,
+            "Comme je viensbhgfds de te le dire")
