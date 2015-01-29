@@ -1,149 +1,150 @@
 """
-Tests for mots-vides
+Tests for StopWord
 """
 from unittest import TestCase
 
-from mots_vides import stop_words
+from mots_vides.stop_words import StopWord
 
 
 class StopWordTestCase(TestCase):
 
-    collection_test1 = set(["foo", "bar", "bla"])
-    collection_test2 = set(["oof", "rab", "alb"])
+    def setUp(self):
+        self.sw = StopWord('foo', ['foo', 'bar', 'baz'])
 
-    def test_len_method(self):
-        sw1 = stop_words.StopWord('foo', self.collection_test1)
-        self.assertEqual(len(sw1), len(sw1.collection))
+    def test_len(self):
+        self.assertEqual(len(self.sw), 3)
 
-    def test_contain_method(self):
-        sw1 = stop_words.StopWord('foo', self.collection_test1)
-        for elem in self.collection_test1:
-            self.assertTrue(elem in sw1)
+    def test_contains(self):
+        self.assertTrue('foo' in self.sw)
+        self.assertFalse('qux' in self.sw)
 
-    def test_iter_method(self):
-        sw1 = stop_words.StopWord('foo', self.collection_test1)
-        expected_item_count = 3
-        count = 0
-        for elem in sw1:
-            count += 1
-        self.assertEqual(expected_item_count, count)
+    def test_iter(self):
+        self.assertEqual(len(list(self.sw)), 3)
 
-    def test_add_n_sub_method(self):
-        sw1 = stop_words.StopWord('foo', self.collection_test1)
-        sw2 = stop_words.StopWord('bar', self.collection_test2)
-        sw1 + sw2
-        for elem in sw2.collection:
-            self.assertTrue(elem in sw1.collection)
-        sw1 - sw2
-        for elem in sw2.collection:
-            self.assertTrue(elem not in sw1.collection)
+    def test_add(self):
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw = nsw + self.sw
+        self.assertEqual(sorted(list(nsw)),
+                         ['bar', 'baz', 'foo', 'norf', 'qux'])
+        self.assertEqual(nsw.language, 'bar')
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw += self.sw
+        self.assertEqual(sorted(list(nsw)),
+                         ['bar', 'baz', 'foo', 'norf', 'qux'])
+        self.assertEqual(nsw.language, 'bar')
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw += ['tic', 'tac', 'toc']
+        self.assertEqual(sorted(list(nsw)),
+                         ['baz', 'norf', 'qux', 'tac', 'tic', 'toc'])
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw += 'tic'
+        self.assertEqual(sorted(list(nsw)),
+                         ['baz', 'norf', 'qux', 'tic'])
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw += unicode('tic')
+        self.assertEqual(sorted(list(nsw)),
+                         ['baz', 'norf', 'qux', 'tic'])
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        self.assertRaises(TypeError, nsw.__add__, object())
+        self.assertEqual(sorted(list(nsw)),
+                         ['baz', 'norf', 'qux'])
+
+    def test_sub(self):
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw = nsw - self.sw
+        self.assertEqual(sorted(list(nsw)), ['norf', 'qux'])
+        self.assertEqual(nsw.language, 'bar')
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw -= self.sw
+        self.assertEqual(sorted(list(nsw)), ['norf', 'qux'])
+        self.assertEqual(nsw.language, 'bar')
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw -= ['tic', 'tac', 'toc', 'qux']
+        self.assertEqual(sorted(list(nsw)),
+                         ['baz', 'norf'])
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw -= 'baz'
+        self.assertEqual(sorted(list(nsw)),
+                         ['norf', 'qux'])
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        nsw -= unicode('baz')
+        self.assertEqual(sorted(list(nsw)),
+                         ['norf', 'qux'])
+
+        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+        self.assertRaises(TypeError, nsw.__sub__, object())
+        self.assertEqual(sorted(list(nsw)),
+                         ['baz', 'norf', 'qux'])
+
+
+class StopWordRebaseTestCase(TestCase):
+
+    def check_stop_word_rebase(self, inpout, outpout, sept):
+        sw = StopWord('test', sept)
+        self.assertEqual(sw.rebase(inpout), outpout)
 
     def test_stopword_rebase_first(self):
-        #test with first word in text
-        sw1 = stop_words.StopWord('foo', set(["comme"]))
-        text = "Comme je viens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "je viens de te le dire")
+        """
+        Test with first word in text
+        """
+        self.check_stop_word_rebase(
+            'Comme je viens de te le dire',
+            'je viens de te le dire',
+            ['comme'])
 
     def test_stopword_rebase_middle(self):
-        #test with word in middle of text
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens"])
-        text = "Comme je viens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme je de te le dire")
+        """
+        Test with word in middle of text
+        """
+        self.check_stop_word_rebase(
+            'Comme je viens de te le dire',
+            'Comme je de te le dire',
+            ['viens'])
 
-    def test_stopword_rebase_newline_between(self):
-        #test with newline between two words
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens", "je"])
-        text = "Comme je\nviens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme\nde te le dire")
+    def test_stopword_rebase_newline(self):
+        """
+        Test with newline between two words
+        """
+        self.check_stop_word_rebase(
+            'Comme je\nviens de te le dire',
+            'Comme\nde te le dire',
+            ['viens', 'je'])
+        self.check_stop_word_rebase(
+            'Comme je\nviens de te le dire',
+            'Comme\nviens de te le dire',
+            ['je'])
+        self.check_stop_word_rebase(
+            'Comme je\nviens de te le dire',
+            'Comme je\nde te le dire',
+            ['viens'])
 
-    def test_stopword_rebase_newline_after(self):
-        #test with newline after word
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["je"])
-        text = "Comme je\nviens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme\nviens de te le dire")
-
-    def test_stopword_rebase_newline_before(self):
-        #test with newline before word
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens"])
-        text = "Comme je\nviens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme je\nde te le dire")
-
-    def test_stopword_rebase_two_escape_code_before(self):
-        #test with newline before word
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens"])
-        text = "Comme je\n\tviens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme je\n\tde te le dire")
-
-    def test_stopword_rebase_two_escape_code_after(self):
-        #test with newline before word
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens"])
-        text = "Comme je viens\n\tde te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme je\n\tde te le dire")
-
-
-    def test_stopword_rebase_tab_between(self):
-        #test with newline between two words
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens", "je"])
-        text = "Comme je\tviens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme\tde te le dire")
-
-    def test_stopword_rebase_tab_after(self):
-        #test with newline after word
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["je"])
-        text = "Comme je\tviens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme\tviens de te le dire")
-
-    def test_stopword_rebase_tab_before(self):
-        #test with newline before word
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens"])
-        text = "Comme je\tviens de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme je\tde te le dire")
+    def test_stopword_rebase_two_escape_code(self):
+        """
+        Test with newline and tab before word
+        """
+        self.check_stop_word_rebase(
+            'Comme je\n\tviens de te le dire',
+            'Comme je\n\tde te le dire',
+            ['viens'])
+        self.check_stop_word_rebase(
+            'Comme je viens\n\tde te le dire',
+            'Comme je\n\tde te le dire',
+            ['viens'])
 
     def test_stopword_dont_rebase(self):
-        #test with newline before word
-        sw1 = stop_words.StopWord('foo')
-        sw1.collection = set(["viens"])
-        text = "Comme je viensbhgfds de te le dire"
-        text = sw1.rebase(text)
-        self.assertEqual(
-            text,
-            "Comme je viensbhgfds de te le dire")
+        """
+        Test with newline before word
+        """
+        self.check_stop_word_rebase(
+            'Comme je viensbhgfds de te le dire',
+            'Comme je viensbhgfds de te le dire',
+            ['viens'])
