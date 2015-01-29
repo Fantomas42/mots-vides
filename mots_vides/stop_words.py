@@ -5,11 +5,13 @@ import re
 
 
 class StopWord(object):
+    """
+    Object managing collection of stop words for a given language.
+    """
 
     def __init__(self, language, collection=[]):
         """
-        Initializes Stopword with a given language
-        and collection empty or not.
+        Initializes with a given language and an optional collection.
         """
         self.language = language
         self.collection = set(collection)
@@ -17,7 +19,7 @@ class StopWord(object):
 
     def __add__(self, entry):
         """
-        Add an entry or collection to an instance
+        Adds an entry or collection of entries to an instance.
         """
         if isinstance(entry, str):
             self.collection.add(entry)
@@ -28,7 +30,7 @@ class StopWord(object):
 
     def __sub__(self, entry):
         """
-        Substract an entry or collection to an instance
+        Substracts an entry or collection of entries to an instance.
         """
         if isinstance(entry, str):
             self.collection.remove(entry)
@@ -39,19 +41,19 @@ class StopWord(object):
 
     def __len__(self):
         """
-        Return the collection lenght
+        Returns the collection length.
         """
-        return len(self.collection)
+        return self.collection.__len__()
 
-    def __contains__(self, elem):
+    def __contains__(self, entry):
         """
-        self.__contains__(elem) <==> elem in self.collection
+        Checks if an entry is in collection.
         """
-        return self.collection.__contains__(elem)
+        return self.collection.__contains__(entry)
 
     def __iter__(self):
         """
-        self.__iter__() <==> iter(self.collection)
+        Iterates over the collection.
         """
         return self.collection.__iter__()
 
