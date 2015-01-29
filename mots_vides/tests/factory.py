@@ -49,10 +49,10 @@ class StopWordFactoryTestCase(TestCase):
     def test_get_stopwords_cache(self):
         self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE, {})
         self.factory.get_stop_words('klingon')
-        self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE.keys(),
+        self.assertEqual(list(self.factory.LOADED_LANGUAGES_CACHE.keys()),
                          ['klingon'])
         sw = self.factory.get_stop_words('kl')
-        self.assertEqual(self.factory.LOADED_LANGUAGES_CACHE.keys(),
+        self.assertEqual(list(self.factory.LOADED_LANGUAGES_CACHE.keys()),
                          ['klingon'])
         self.factory.data_directory = '/brutal/change/'
         self.assertEqual(sw.collection,
@@ -81,11 +81,10 @@ class StopWordFactoryTestCase(TestCase):
     def test_read_collection(self):
         collection_file = NamedTemporaryFile()
         collection_text = 'egor\n\n   \nai\n'
-        collection_file.write('\xef\xbb\xbf')  # BOM
         collection_file.write(collection_text.encode('utf-8'))
         collection_file.seek(0)
         collection = self.factory.read_collection(collection_file.name)
-        self.assertEqual(collection, ['egor', 'ai'])
+        self.assertEqual(list(collection), ['egor', 'ai'])
         collection_file.close()
 
     def test_write_collection(self):
@@ -94,6 +93,6 @@ class StopWordFactoryTestCase(TestCase):
             collection_file.name,
             ['nuq', "HIja'", "ghobe'", 'naDev'])
         collection_file.seek(0)
-        self.assertEqual(collection_file.read(),
+        self.assertEqual(collection_file.read().decode('utf-8'),
                          "HIja'\nghobe'\nnaDev\nnuq")
         collection_file.close()

@@ -109,6 +109,6 @@ class StopWordFactory(object):
         Writes a collection of stop words into a file.
         """
         collection = sorted(list(collection))
-        with open(filename, 'w+') as fd:
+        with open(filename, 'wb+') as fd:
             fd.truncate()
             fd.write('\n'.join(collection).encode('utf-8'))
