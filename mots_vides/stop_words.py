@@ -58,7 +58,7 @@ class StopWord(object):
         return self.collection.__iter__()
 
     def _compile_regex(self, word):
-        self.regex = re.compile(r'((^| ){0}(| ))|({0} )|{0}'.format(word), flags=re.IGNORECASE)
+        self.regex = re.compile(r'((^| )((?<!\w){0}(?!\w))(| ))|(((?<!\w){0}(?!\w)) )|((?<!\w){0}(?!\w))'.format(word), flags=re.IGNORECASE)
         return self.regex
 
     def rebase(self, text):
