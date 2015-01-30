@@ -4,6 +4,8 @@ StopWord Python container, managing collection of stop words.
 """
 import re
 
+TEXT_TYPE_LIST = ('str', 'unicode', 'byte')
+
 
 class StopWord(object):
     """
@@ -21,7 +23,7 @@ class StopWord(object):
         """
         Adds an entry or collection of entries to an instance.
         """
-        if isinstance(entry, basestring):
+        if type(entry).__name__ in TEXT_TYPE_LIST:
             self.collection.add(entry)
         else:
             self.collection = self.collection.union(entry)
@@ -32,7 +34,7 @@ class StopWord(object):
         """
         Substracts an entry or collection of entries to an instance.
         """
-        if isinstance(entry, basestring):
+        if type(entry).__name__ in TEXT_TYPE_LIST:
             self.collection.remove(entry)
         else:
             self.collection = self.collection.difference(entry)
