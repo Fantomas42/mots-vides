@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 StopWord Python container, managing collection of stop words.
 """

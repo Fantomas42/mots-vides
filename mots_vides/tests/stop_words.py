@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 """
 Tests for StopWord
 """
+import sys
 from unittest import TestCase
 
 from mots_vides.stop_words import StopWord
@@ -45,10 +45,11 @@ class StopWordTestCase(TestCase):
         self.assertEqual(sorted(list(nsw)),
                          ['baz', 'norf', 'qux', 'tic'])
 
-        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
-        nsw += unicode('tic')
-        self.assertEqual(sorted(list(nsw)),
-                         ['baz', 'norf', 'qux', 'tic'])
+        if sys.version_info[0] == 2:
+            nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+            nsw += 'tic'.decode('utf-8')
+            self.assertEqual(sorted(list(nsw)),
+                             ['baz', 'norf', 'qux', 'tic'])
 
         nsw = StopWord('bar', ['baz', 'qux', 'norf'])
         self.assertRaises(TypeError, nsw.__add__, object())
@@ -76,10 +77,11 @@ class StopWordTestCase(TestCase):
         self.assertEqual(sorted(list(nsw)),
                          ['norf', 'qux'])
 
-        nsw = StopWord('bar', ['baz', 'qux', 'norf'])
-        nsw -= unicode('baz')
-        self.assertEqual(sorted(list(nsw)),
-                         ['norf', 'qux'])
+        if sys.version_info[0] == 2:
+            nsw = StopWord('bar', ['baz', 'qux', 'norf'])
+            nsw -= 'baz'.decode('utf-8')
+            self.assertEqual(sorted(list(nsw)),
+                             ['norf', 'qux'])
 
         nsw = StopWord('bar', ['baz', 'qux', 'norf'])
         self.assertRaises(TypeError, nsw.__sub__, object())
