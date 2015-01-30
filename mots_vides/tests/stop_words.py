@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Tests for StopWord
 """
@@ -145,6 +146,6 @@ class StopWordRebaseTestCase(TestCase):
         Test with newline before word
         """
         self.check_stop_word_rebase(
-            'Comme je viensbhgfds de te le dire',
-            'Comme je viensbhgfds de te le dire',
+            'Comme je gfgviensbhgfds de te le dire',
+            'Comme je gfgviensbhgfds de te le dire',
             ['viens'])

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 StopWord Python container, managing collection of stop words.
 """
@@ -15,13 +16,12 @@ class StopWord(object):
         """
         self.language = language
         self.collection = set(collection)
-        self.regex = None
 
     def __add__(self, entry):
         """
         Adds an entry or collection of entries to an instance.
         """
-        if isinstance(entry, str):
+        if isinstance(entry, basestring):
             self.collection.add(entry)
         else:
             self.collection = self.collection.union(entry)
@@ -32,7 +32,7 @@ class StopWord(object):
         """
         Substracts an entry or collection of entries to an instance.
         """
-        if isinstance(entry, str):
+        if isinstance(entry, basestring):
             self.collection.remove(entry)
         else:
             self.collection = self.collection.difference(entry)
@@ -58,8 +58,10 @@ class StopWord(object):
         return self.collection.__iter__()
 
     def _compile_regex(self, word):
-        self.regex = re.compile(r'((^| )((?<!\w){0}(?!\w))(| ))|(((?<!\w){0}(?!\w)) )|((?<!\w){0}(?!\w))'.format(word), flags=re.IGNORECASE)
-        return self.regex
+        return re.compile(
+            r'((^| ){0})|({0} )|{0}'.format('((?<!\w)'+word+'(?!\w))'),
+            flags=re.IGNORECASE
+        )
 
     def rebase(self, text):
         for word in self.collection:
