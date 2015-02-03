@@ -19,13 +19,20 @@ More than a long speech here a direct introduction: ::
   >>> from mots_vides import stop_words
 
   >>> english_stop_words = stop_words('en')
-  >>> text = 'Even though using "lorem ipsum" often arouses curiosity due to its resemblance to classical Latin, it is not intended to have meaning.'
+  >>> text = """
+  ... Even though using "lorem ipsum" often arouses curiosity
+  ... due to its resemblance to classical Latin,
+  ... it is not intended to have meaning.
+  ... """
 
   >>> print(english_stop_words.rebase(text))
-  XXXX XXXXXX XXXXX "lorem ipsum" XXXXX arouses curiosity XXX XX XXX resemblance XX classical Latin, XX XX XXX intended XX XXXX meaning
+  XXXX XXXXXX XXXXX "lorem ipsum" XXXXX arouses curiosity
+  XXX XX XXX resemblance XX classical Latin,
+  XX XX XXX intended XX XXXX meaning.
 
   >>> print(english_stop_words.rebase(text, '').split())
-  ['"lorem', 'ipsum"', 'arouses', 'curiosity', 'resemblance', 'classical', 'Latin,', 'intended', 'meaning']
+  ['"lorem', 'ipsum"', 'arouses', 'curiosity', 'resemblance',
+  'classical', 'Latin,', 'intended', 'meaning.']
 
 Advanced
 --------
