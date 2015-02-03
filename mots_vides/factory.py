@@ -57,7 +57,7 @@ class StopWordFactory(object):
         """
         if language not in self.available_languages:
             raise StopWordError(
-                'Stop words are not unavailable in "%s".\n'
+                'Stop words are not available in "%s".\n'
                 'If possible do a pull request at : '
                 'https://github.com/Fantomas42/mots-vides' %
                 language)
