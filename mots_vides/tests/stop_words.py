@@ -183,12 +183,10 @@ class StopWordRebaseFunctionalTestCase(TestCase):
     def test_stop_word_rebase_functional(self):
         current_dir = os.path.dirname(__file__)
         file_name = os.path.join(current_dir, 'corpus', 'french.txt')
-        file_content = '\n'.join(open(file_name, 'rb').readlines()
-                                 ).decode('utf-8')
+        file_content = open(file_name, 'rb').read().decode('utf-8')
         solution_name = os.path.join(current_dir,
                                      'corpus', 'french_solution.txt')
-        solution_content = '\n'.join(open(solution_name, 'rb').readlines()
-                                     ).decode('utf-8')
+        solution_content = open(solution_name, 'rb').read().decode('utf-8')
 
         factory = StopWordFactory()
         stop_words = factory.get_stop_words('fr')
