@@ -31,7 +31,7 @@ Advanced
 --------
 
 *Mots vides* also provides two objects for managing the stop words in your
- language.
+language.
 
 ``StopWord`` which is a container for a collection of stop words.
 By default is language agnostic, but can be easily manipulated to enrich
