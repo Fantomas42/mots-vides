@@ -1,10 +1,12 @@
 """
 Tests for StopWord
 """
+import os
 import sys
 from unittest import TestCase
 
 from mots_vides.stop_words import StopWord
+from mots_vides.factory import StopWordFactory
 
 
 class StopWordTestCase(TestCase):
@@ -173,3 +175,20 @@ class StopWordRebaseTestCase(TestCase):
             'Comme je\n\tviens de te le dire',
             'Comme je\n\t de te le dire',
             ['viens'], '')
+
+
+class StopWordRebaseFunctionalTestCase(TestCase):
+    maxDiff = None
+
+    def test_stop_word_rebase_functional(self):
+        current_dir = os.path.dirname(__file__)
+        file_name = os.path.join(current_dir, 'corpus', 'french.txt')
+        file_content = '\n'.join(open(file_name).readlines())
+        file_name_solution = os.path.join(current_dir,
+                                          'corpus', 'french_solution.txt')
+        file_content_solution = '\n'.join(open(file_name_solution).readlines())
+
+        factory = StopWordFactory()
+        stop_words = factory.get_stop_words('fr')
+        file_content_rebased = stop_words.rebase(file_content)
+        self.assertEqual(file_content_rebased, file_content_solution)
