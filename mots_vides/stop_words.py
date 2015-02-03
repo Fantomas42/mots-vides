@@ -58,14 +58,15 @@ class StopWord(object):
         """
         return self.collection.__iter__()
 
-    def _compile_regex(self, word):
-        return re.compile(
-            r'((^| ){0})|({0} )|{0}'.format('((?<!\w)'+word+'(?!\w))'),
-            flags=re.IGNORECASE
-        )
+    def rebase(self, text, char='X'):
+        """
+        Rebases text with stop words removed.
+        """
+        regexp = re.compile(r'\b(%s)\b' % '|'.join(self.collection),
+                            re.IGNORECASE | re.UNICODE)
 
-    def rebase(self, text):
-        for word in self.collection:
-            current_regex = self._compile_regex(word)
-            text = current_regex.sub('', text).strip()
-        return text
+        def replace(m):
+            word = m.group(1)
+            return char * len(word)
+
+        return regexp.sub(replace, text)

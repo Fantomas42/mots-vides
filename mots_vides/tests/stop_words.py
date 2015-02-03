@@ -91,27 +91,33 @@ class StopWordTestCase(TestCase):
 
 class StopWordRebaseTestCase(TestCase):
 
-    def check_stop_word_rebase(self, inpout, outpout, sept):
+    def check_stop_word_rebase(self, inpout, outpout, sept, char=None):
         sw = StopWord('test', sept)
-        self.assertEqual(sw.rebase(inpout), outpout)
+        if char is None:
+            self.assertEqual(sw.rebase(inpout), outpout)
+        else:
+            self.assertEqual(sw.rebase(inpout, char), outpout)
 
-    def test_stopword_rebase_first(self):
+    def test_stopword_rebase(self):
         """
-        Test with first word in text
+        Basic rebasing
         """
         self.check_stop_word_rebase(
             'Comme je viens de te le dire',
-            'je viens de te le dire',
+            'XXXXX je viens de te le dire',
             ['comme'])
-
-    def test_stopword_rebase_middle(self):
-        """
-        Test with word in middle of text
-        """
         self.check_stop_word_rebase(
             'Comme je viens de te le dire',
-            'Comme je de te le dire',
+            'Comme je XXXXX de te le dire',
             ['viens'])
+        self.check_stop_word_rebase(
+            'Comme je viens de te le dire',
+            'Comme je viens de te le XXXX',
+            ['dire'])
+        self.check_stop_word_rebase(
+            'Comme je viens de te le dire',
+            'Comme je viens de te le @@@@',
+            ['dire'], '@')
 
     def test_stopword_rebase_newline(self):
         """
@@ -119,28 +125,19 @@ class StopWordRebaseTestCase(TestCase):
         """
         self.check_stop_word_rebase(
             'Comme je\nviens de te le dire',
-            'Comme\nde te le dire',
+            'Comme XX\nXXXXX de te le dire',
             ['viens', 'je'])
         self.check_stop_word_rebase(
             'Comme je\nviens de te le dire',
-            'Comme\nviens de te le dire',
+            'Comme XX\nviens de te le dire',
             ['je'])
         self.check_stop_word_rebase(
             'Comme je\nviens de te le dire',
-            'Comme je\nde te le dire',
+            'Comme je\nXXXXX de te le dire',
             ['viens'])
-
-    def test_stopword_rebase_two_escape_code(self):
-        """
-        Test with newline and tab before word
-        """
         self.check_stop_word_rebase(
             'Comme je\n\tviens de te le dire',
-            'Comme je\n\tde te le dire',
-            ['viens'])
-        self.check_stop_word_rebase(
-            'Comme je viens\n\tde te le dire',
-            'Comme je\n\tde te le dire',
+            'Comme je\n\tXXXXX de te le dire',
             ['viens'])
 
     def test_stopword_dont_rebase(self):
@@ -148,6 +145,31 @@ class StopWordRebaseTestCase(TestCase):
         Test with newline before word
         """
         self.check_stop_word_rebase(
+            'Comme je viensbhgfds de te le dire',
+            'Comme je viensbhgfds de te le dire',
+            ['viens'])
+        self.check_stop_word_rebase(
+            'Comme je gfgviens de te le dire',
+            'Comme je gfgviens de te le dire',
+            ['viens'])
+        self.check_stop_word_rebase(
             'Comme je gfgviensbhgfds de te le dire',
             'Comme je gfgviensbhgfds de te le dire',
             ['viens'])
+
+    def test_stopword_empty(self):
+        """
+        Test with empty charactere to rebase
+        """
+        self.check_stop_word_rebase(
+            'Comme je viens de te le dire',
+            ' je viens de te le dire',
+            ['comme'], '')
+        self.check_stop_word_rebase(
+            'Comme je viens de te le dire',
+            'Comme je  de te le dire',
+            ['viens'], '')
+        self.check_stop_word_rebase(
+            'Comme je\n\tviens de te le dire',
+            'Comme je\n\t de te le dire',
+            ['viens'], '')
