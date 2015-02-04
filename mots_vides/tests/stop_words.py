@@ -90,6 +90,14 @@ class StopWordTestCase(TestCase):
         self.assertEqual(sorted(list(nsw)),
                          ['baz', 'norf', 'qux'])
 
+    def test_str(self):
+        self.assertEqual(self.sw.__str__(),
+                         'Foo stop words: 3 words')
+
+    def test_repr(self):
+        self.assertEqual(self.sw.__repr__(),
+                         "Foo stop words: ['bar', 'baz', 'foo']")
+
 
 class StopWordRebaseTestCase(TestCase):
 

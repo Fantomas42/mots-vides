@@ -58,6 +58,20 @@ class StopWord(object):
         """
         return self.collection.__iter__()
 
+    def __repr__(self):
+        """
+        Returns unambigous value.
+        """
+        return '%s stop words: %s' % (
+            self.language.title(), sorted(self.collection))
+
+    def __str__(self):
+        """
+        Returns informational value.
+        """
+        return '%s stop words: %i words' % (
+            self.language.title(), self.__len__())
+
     def rebase(self, text, char='X'):
         """
         Rebases text with stop words removed.
