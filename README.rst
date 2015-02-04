@@ -142,6 +142,11 @@ Inspired from https://github.com/Alir3z4/python-stop-words
 Changelog
 =========
 
+2015.2.4
+--------
+
+- Initial release
+
 2015.1.21.dev0
 --------------
 
