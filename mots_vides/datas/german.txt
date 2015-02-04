@@ -23,9 +23,15 @@ als
 also
 am
 an
+ander
 andere
+anderem
 anderen
+anderer
+anderes
+anderm
 andern
+anderr
 anders
 au
 auch
@@ -90,7 +96,9 @@ daß
 dein
 deine
 deinem
+deinen
 deiner
+deines
 dem
 dementsprechend
 demgegenüber
@@ -104,6 +112,7 @@ denn
 denselben
 der
 deren
+derer
 derjenige
 derjenigen
 dermassen
@@ -161,7 +170,9 @@ einem
 einen
 einer
 eines
+einig
 einige
+einigem
 einigen
 einiger
 einiges
@@ -184,6 +195,10 @@ etwas
 euch
 euer
 eure
+eurem
+euren
+eurer
+eures
 f
 früher
 fünf
@@ -238,6 +253,7 @@ gute
 guter
 gutes
 h
+hab
 habe
 haben
 habt
@@ -308,6 +324,7 @@ keine
 keinem
 keinen
 keiner
+keines
 kleine
 kleinen
 kleiner
@@ -481,9 +498,13 @@ um
 und
 und?
 uns
+unse
+unsem
+unsen
 unser
 unsere
 unserer
+unses
 unter
 v
 vergangenen
@@ -505,9 +526,11 @@ wahr?
 wann
 war
 waren
+warst
 wart
 warum
 was
+weg
 wegen
 weil
 weit

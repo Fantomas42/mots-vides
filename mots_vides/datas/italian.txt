@@ -1,5 +1,4 @@
 a
-a mezzo
 abbastanza
 abbia
 abbiamo
@@ -273,7 +272,7 @@ giorni
 giorno
 giu
 giu"
-giÃ
+giù
 gli
 gliela
 gliele
@@ -414,19 +413,19 @@ perche
 perchÃ¨
 perché
 percio
-perciÃ²
 perfino
 pero
 persone
-perÃ²
+però
 piedi
 pieno
 piglia
 piu
 piu"
-piÃ¹
+più
 più"
 po
+pochi
 pochissimo
 poco
 poi
@@ -440,7 +439,7 @@ puo
 pur
 pure
 purtroppo
-puÃ²
+può
 qua
 qual
 qualche
@@ -521,6 +520,7 @@ stando
 stanno
 starai
 staranno
+stare
 starebbe
 starebbero
 starei
@@ -630,6 +630,4 @@ vostra
 vostre
 vostri
 vostro
-vostro﻿a
-Ã¨
 è

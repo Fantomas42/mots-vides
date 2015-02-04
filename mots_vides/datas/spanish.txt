@@ -170,6 +170,7 @@ estaréis
 estaría
 estaríais
 estaríamos
+estarían
 estarías
 estas
 este
@@ -188,6 +189,7 @@ estuvieseis
 estuviesen
 estuvieses
 estuvimos
+estuviste
 estuvisteis
 estuviste﻿algún
 estuviéramos
@@ -411,7 +413,6 @@ podría
 podrían
 poner
 por
-por qué
 porque
 posible
 primer

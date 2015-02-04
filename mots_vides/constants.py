@@ -12,6 +12,7 @@ DATA_DIRECTORY = os.path.join(
 LANGUAGE_CODES = {
     'af': 'afrikaans',
     'ar': 'arabic',
+    'ast': 'asturian',
     'az': 'azerbaijani',
     'bg': 'bulgarian',
     'be': 'belarusian',
@@ -39,6 +40,7 @@ LANGUAGE_CODES = {
     'hi': 'hindi',
     'hr': 'croatian',
     'hu': 'hungarian',
+    'hy': 'armenian',
     'ia': 'interlingua',
     'id': 'indonesian',
     'io': 'ido',
@@ -78,6 +80,7 @@ LANGUAGE_CODES = {
     'th': 'thai',
     'tr': 'turkish',
     'tt': 'tatar',
+    'udm': 'udmurt',
     'uk': 'ukrainian',
     'ur': 'urdu',
     'vi': 'vietnamese',

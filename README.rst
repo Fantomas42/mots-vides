@@ -61,13 +61,13 @@ language and the appropriate collection of stop words. ::
   >>> factory = StopWordFactory()
   >>> french_stop_words = factory.get_stop_words('french')
   >>> print(len(french_stop_words))
-  494
+  577
 
 You can also use international language code to query a collection: ::
 
   >>> french_stop_words = factory.get_stop_words('fr')
   >>> print(len(french_stop_words))
-  494
+  577
 
 If the required language does not exist a ``StopWordError`` is raised,
 until the ``fail_safe`` parameter is set to ``True``: ::
