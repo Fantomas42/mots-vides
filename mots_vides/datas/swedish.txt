@@ -45,8 +45,10 @@ del
 delen
 dem
 den
+denna
 deras
 dess
+dessa
 det
 detta
 dig
@@ -61,6 +63,7 @@ därför
 då
 efter
 eftersom
+ej
 elfte
 eller
 elva
@@ -151,6 +154,7 @@ högre
 högst
 i
 ibland
+icke
 idag
 igen
 igår
@@ -168,6 +172,7 @@ inte
 inuti
 ja
 jag
+ju
 jämfört
 kan
 kanske
@@ -283,12 +288,14 @@ sist
 sista
 siste
 sitt
+sitta
 sju
 sjunde
 sjuttio
 sjuttionde
 sjutton
 sjuttonde
+själv
 sjätte
 ska
 skall
@@ -308,6 +315,9 @@ säger
 sämre
 sämst
 så
+sådan
+sådana
+sådant
 tack
 tidig
 tidigare
@@ -349,7 +359,9 @@ vara
 varför
 varifrån
 varit
+varje
 varken
+vars
 varsågod
 vart
 vem
@@ -363,6 +375,7 @@ viktigare
 viktigast
 viktigt
 vilka
+vilkas
 vilken
 vilket
 vill
@@ -374,7 +387,9 @@ våra
 vårt
 än
 ännu
+är
 även
+åt
 åtminstone
 åtta
 åttio
