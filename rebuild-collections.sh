@@ -1,8 +1,10 @@
 #!/bin/bash
 # Rebuild all collections of stop words
 
-for lang in $(ls ./mots_vides/datas/)
+path=${1-mots_vides/datas/}
+
+for lang in $(ls $path)
 do
   lang=$(echo $lang | cut -f1 -d.)
-  ./bin/merge-stop-words $lang mots_vides/datas/$lang.txt
+  ./bin/merge-stop-words $lang $path$lang.txt
 done
