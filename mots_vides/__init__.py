@@ -9,6 +9,7 @@ __all__ = ['StopWord', 'StopWordFactory',
 
 default_factory = StopWordFactory()
 
+
 def stop_words(language, fail_safe=True):
     """
     Shortcut for getting stop words
