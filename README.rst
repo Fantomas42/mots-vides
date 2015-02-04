@@ -4,7 +4,7 @@ Mots vides
 
 |travis-develop| |coverage-develop|
 
-Python library for managing common stop words in many languages.
+Python library for managing common stop words in 39 languages.
 
 .. contents::
 
@@ -81,7 +81,45 @@ until the ``fail_safe`` parameter is set to ``True``: ::
 Supported languages
 ===================
 
-# TODO
+* Arabic
+* Armenian
+* Basque
+* Bengali
+* Bulgarian
+* Catalan
+* Chinese
+* Czech
+* Danish
+* Dutch
+* English
+* Finnish
+* French
+* Galician
+* German
+* Greek
+* Hindi
+* Hungarian
+* Indonesian
+* Irish
+* Italian
+* Japanese
+* Korean
+* Latvian
+* Lithuanian
+* Marathi
+* Norwegian
+* Persian
+* Polish
+* Portuguese
+* Romanian
+* Russian
+* Slovak
+* Spanish
+* Swedish
+* Thai
+* Turkish
+* Ukrainian
+* Urdu
 
 Compatibility
 =============
