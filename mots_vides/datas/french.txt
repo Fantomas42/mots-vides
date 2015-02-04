@@ -77,6 +77,7 @@ celles-là
 celui
 celui-ci
 celui-là
+celà
 cent
 cependant
 certain
@@ -96,6 +97,8 @@ cher
 chers
 chez
 chiche
+chose
+choses
 chut
 chère
 chères
@@ -285,6 +288,7 @@ lesquels
 leur
 leurs
 longtemps
+lors
 lorsque
 lui
 lui-même
@@ -346,6 +350,7 @@ on
 ont
 onze
 onzième
+or
 ore
 ou
 ouf
@@ -385,6 +390,7 @@ plupart
 plus
 plusieurs
 plutôt
+point
 pouah
 pour
 pourquoi
@@ -394,13 +400,13 @@ premièrement
 proche
 près
 psitt
+puis
 puisque
 q
 qu
 quand
 quant
 quant-à-soi
-quanta
 quarante
 quatorze
 quatre
@@ -532,9 +538,7 @@ vingt
 vivat
 vive
 vives
-vlan
 voici
-voie
 voient
 voilà
 vois
@@ -565,6 +569,8 @@ zut
 étiez
 étions
 été
+étée
+étées
 étés
 êtes
 être

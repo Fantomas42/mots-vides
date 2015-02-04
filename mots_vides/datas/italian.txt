@@ -1,5 +1,4 @@
 a
-a mezzo
 abbastanza
 abbia
 abbiamo
@@ -631,6 +630,4 @@ vostra
 vostre
 vostri
 vostro
-vostro﻿a
-Ã¨
 è
