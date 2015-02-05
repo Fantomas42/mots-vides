@@ -33,6 +33,7 @@ setup(
     entry_points={
         'console_scripts': [
             'merge-stop-words=mots_vides.scripts.merger:cmdline',
+            'rebase-stop-words=mots_vides.scripts.rebaser:cmdline',
         ]
     }
 )
