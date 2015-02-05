@@ -17,6 +17,12 @@ setup(
     license=open('LICENSE').read(),
 
     packages=find_packages(),
+    package_data={
+        'mots_vides': [
+            'datas/*.txt',
+            ]
+    },
+
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
