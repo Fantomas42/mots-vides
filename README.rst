@@ -14,7 +14,7 @@ Usage
 Simple
 ------
 
-More than a long speech here a direct introduction: ::
+Better than a long speech, here a direct introduction: ::
 
   >>> from mots_vides import stop_words
 
@@ -37,11 +37,11 @@ More than a long speech here a direct introduction: ::
 Advanced
 --------
 
-*Mots vides* also provides two objects for managing the stop words in your
+*Mots vides* also provides two classes for managing the stop words in your
 language.
 
 ``StopWord`` which is a container for a collection of stop words.
-By default is language agnostic, but can be easily manipulated to enrich
+By default is language agnostic, but can be easily manipulated to create
 the collection: ::
 
   >>> from mots_vides import StopWord
@@ -50,8 +50,9 @@ the collection: ::
   >>> french_stop_words += StopWord('french', ['un', 'une', 'des'])
   >>> french_stop_words += ['or', 'ni', 'car']
   >>> french_stop_words += 'assez'
+  >>> french_stop_words += u'aussitôt'
   >>> print(sorted(french_stop_words))
-  ['assez', 'car', 'des', 'la', 'le', 'les', 'ni', 'or', 'un', 'une']
+  ['assez', u'aussitôt', 'car', 'des', 'la', 'le', 'les', 'ni', 'or', 'un', 'une']
 
 ``StopWordFactory`` is a factory for initializing ``StopWord`` objects by
 language and the appropriate collection of stop words. ::
@@ -70,7 +71,7 @@ You can also use international language code to query a collection: ::
   577
 
 If the required language does not exist a ``StopWordError`` is raised,
-until the ``fail_safe`` parameter is set to ``True``: ::
+unless the ``fail_safe`` parameter is set to ``True``: ::
 
   >>> klingon_stop_words = factory.get_stop_words('klingon')
   StopWordError: Stop words are not available in "klingon".
