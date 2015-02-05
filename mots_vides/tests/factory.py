@@ -73,6 +73,11 @@ class StopWordFactoryTestCase(TestCase):
         self.assertEqual(self.factory.available_languages,
                          ['klingon', 'sindarin'])
 
+    def test_available_languages_error(self):
+        self.factory.data_directory = '/brutal/change/'
+        self.assertRaises(StopWordError,
+                          lambda: self.factory.available_languages)
+
     def test_get_collection_filename(self):
         filename = self.factory.get_collection_filename('foo')
         self.assertTrue(filename.endswith('foo.txt'))

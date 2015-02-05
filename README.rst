@@ -143,6 +143,11 @@ Inspired from https://github.com/Alir3z4/python-stop-words
 Changelog
 =========
 
+2015.2.6
+--------
+
+- Fix potential issue in factory.get_available_languages
+
 2015.2.5
 --------
 
