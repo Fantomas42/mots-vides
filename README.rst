@@ -143,6 +143,12 @@ Inspired from https://github.com/Alir3z4/python-stop-words
 Changelog
 =========
 
+2015.2.5
+--------
+
+- Fix packaging
+- Add a rebaser command script
+
 2015.2.4
 --------
 

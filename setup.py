@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='mots-vides',
-    version='2015.2.4',
+    version='2015.2.5',
 
     description='Python library for managing stop words in many languages.',
     long_description=open('README.rst').read(),
