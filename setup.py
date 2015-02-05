@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='mots-vides',
-    version='2015.2.4',
+    version='2015.2.5',
 
     description='Python library for managing stop words in many languages.',
     long_description=open('README.rst').read(),
@@ -17,6 +17,12 @@ setup(
     license=open('LICENSE').read(),
 
     packages=find_packages(),
+    package_data={
+        'mots_vides': [
+            'datas/*.txt',
+            ]
+    },
+
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
@@ -27,6 +33,7 @@ setup(
     entry_points={
         'console_scripts': [
             'merge-stop-words=mots_vides.scripts.merger:cmdline',
+            'rebase-stop-words=mots_vides.scripts.rebaser:cmdline',
         ]
     }
 )
