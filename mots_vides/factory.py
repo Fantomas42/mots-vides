@@ -105,7 +105,7 @@ class StopWordFactory(object):
         """
         with open(filename, 'rb') as fd:
             lines = fd.read().decode('utf-8-sig').splitlines()
-        collection = filter(bool, [line.strip() for line in lines])
+        collection = list(filter(bool, [line.strip() for line in lines]))
         return collection
 
     def write_collection(self, filename, collection):
