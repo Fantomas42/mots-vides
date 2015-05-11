@@ -143,6 +143,11 @@ Inspired from https://github.com/Alir3z4/python-stop-words
 Changelog
 =========
 
+2015.5.11
+---------
+
+- Fix cache system for Python 3
+
 2015.2.6
 --------
 
